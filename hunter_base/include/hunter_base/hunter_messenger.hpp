@@ -194,8 +194,8 @@ class HunterMessenger {
   double max_steer_angle_central = 0.0;
   double max_steer_angle = 0.0;
 
-  rclcpp::Time last_time_;
-  rclcpp::Time current_time_;
+  rclcpp::Time last_time_{0, 0, RCL_ROS_TIME};
+  rclcpp::Time current_time_{0, 0, RCL_ROS_TIME};
 
   void TwistCmdCallback(const geometry_msgs::msg::Twist::SharedPtr msg) {
     

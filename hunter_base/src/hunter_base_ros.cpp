@@ -1,3 +1,5 @@
+#include <chrono>
+#include <thread>
 /*
  * hunter_base_ros.cpp
  *
@@ -137,13 +139,13 @@ void HunterBaseRos::Run() {
 
     // publish robot state at 50Hz while listening to twist commands
     messenger->SetupSubscription();
-    rclcpp::Rate rate(50);
+    auto next_tick = std::chrono::steady_clock::now();
     keep_running_ = true;
     while (keep_running_) {
       messenger->PublishStateToROS();
       // robot_->EnableCommandedMode();
       rclcpp::spin_some(shared_from_this());
-      rate.sleep();
+      next_tick += std::chrono::milliseconds(20); std::this_thread::sleep_until(next_tick);
     // }
   }
 }
